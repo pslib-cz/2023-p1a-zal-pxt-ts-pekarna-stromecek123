@@ -1,29 +1,27 @@
-/*
-    cas: je doba v sekundách, po kterou trouba
-    odebírala uvedený příkon
-    spotreba: je kolik energie by bylo spotřebováno,
-    pokud by takto trouba pekla celou hodinu
-    (jsou to watthodiny [Wh])
-
-    pro cas: 600s a spotreba: 3500 Wh je skutečné
-    odebrané množství "energie":
-    3500 * (600 / 3600) === 3500 * (1/6) === 583,333W
-*/
 type Odber = {
-    cas: number, //čas je v sekundách
-    spotreba: number //spotřeba ve watech za hodinu
+    cas: number; //ms
+    prikon: number; //watty
 }
-const cena: number = 6.70; // Kč / kWh
+
 let data: Array<Odber> = [
-    { cas: 600, spotreba: 3500 },
-    { cas: 120, spotreba: 0 },
-    { cas: 300, spotreba: 1700 }, // data[2].cas
-    { cas: 60, spotreba: 0 },
-    { cas: 800, spotreba: 1500 },
+    { cas: 560, prikon: 3400 }, //3,4 watt hodin
+    { cas: 590, prikon: 3600 },
+    { cas: 580, prikon: 3700 }, // data[2].cas
+    { cas: 590, prikon: 3600 },
+    { cas: 600, prikon: 3500 },
 ]
 
-for (const peceme of data){
-    console.logValue("čas: ", peceme.cas);
-    console.logValue("spotřeba: ", peceme.spotreba);
-    console.logValue("spotřebováno: ", peceme.spotreba / 3600 * peceme.cas);
-}
+//cena 6,50
+//kolik to stalo a spotreba(kilowatt hodiny)
+const price: number = 6.5
+let power: number = (data[0].prikon + data[1].prikon + data[2].prikon + data[3].prikon + data[4].prikon) / 5
+let time: number = (data[0].cas + data[1].cas + data[2].cas + data[3].cas + data[4].cas) / 5
+//nenapada me jak to udelat kratsi
+
+
+let kwh: number = (power / 1000) * (time / 3600)
+let endprice: number = kwh * price;
+console.log(endprice);
+console.log(kwh)
+
+
